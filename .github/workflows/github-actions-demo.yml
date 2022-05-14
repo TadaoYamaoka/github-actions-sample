@@ -17,12 +17,21 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools wheel twine numpy==1.19.5 Cython
+        pip install setuptools wheel twine Cython
+    - name: Install numpy1_19_5
+      if: ${{ matrix.python-version != '3.10' }}
+      run: pip install  numpy==1.19.5
+    - name: Install numpy1_21_5
+      if: ${{ matrix.python-version == '3.10' }}
+      run: pip install  numpy==1.21.5
     - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
         TWINE_PASSWORD: ${{ secrets.PYPI_PASSWORD }}
       run: |
+        echo %PATH%
+        echo "$env:PATH"
         echo %TWINE_USERNAME%
+        echo "$env:TWINE_USERNAME"
         #python setup.py bdist_wheel
         #twine upload --repository testpypi dist/*
