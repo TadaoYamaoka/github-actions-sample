@@ -25,7 +25,7 @@ ext_modules = [
 
 setup(
     name='ty_github-actions-sample',
-    version='0.0.1',
+    version='0.0.2',
     packages=['mysample'],
     ext_modules=ext_modules,
     cmdclass={'build_ext': my_build_ext},
