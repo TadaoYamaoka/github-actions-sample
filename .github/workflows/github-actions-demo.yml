@@ -4,17 +4,20 @@ on:
     types: [published]
 jobs:
   deploy:
-    runs-on: ubuntu-latest
+    runs-on: windows-2019
+    strategy:
+      matrix:
+        python-version: [ '3.6', '3.7', '3.8', '3.9', '3.10' ]
     steps:
     - name: Check out repository code
       uses: actions/checkout@v3
     - uses: actions/setup-python@v3
       with:
-        python-version: '3.x'
+        python-version: ${{ matrix.python-version }}
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install setuptools wheel twine
+        pip install setuptools wheel twine numpy==1.19.5 Cython
     - name: Build and publish
       env:
         TWINE_USERNAME: ${{ secrets.PYPI_USERNAME }}
